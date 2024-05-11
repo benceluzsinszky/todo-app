@@ -1,0 +1,20 @@
+services:
+  app:
+    build: .
+    container_name: fastapi-sever
+    command: uvicorn main:app --host 0.0.0.0 --port 80 --reload
+    ports:
+      - 8080:80
+    volumes:
+      - .:/app
+    environment:
+      - DATABASE_URL=postgresql+psycopg2://postgres:postgres@db:5432/fastapi_db
+
+  db:
+    image: postgres:16.1
+    expose:
+      - 5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=fastapi_db

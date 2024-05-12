@@ -37,11 +37,7 @@ def read_db_all_todo_items(session: Session) -> list:
 
 
 def update_db_todo_item(id: int, updated_item: TodoItem, session: Session) -> TodoItem:
-    print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaasdfagfdsfghfs")
-
     item = read_db_todo_item(id, session)
-    print(item)
-    print(updated_item)
     if not item.completed and updated_item.completed:
         updated_item.date_completed = datetime.now(timezone.utc)
     for key, value in updated_item.model_dump(exclude_none=True).items():

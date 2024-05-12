@@ -4,9 +4,14 @@
   "description": "A todo app with React frontend and various backend implementations.",
   "main": "index.js",
   "scripts": {
-    "fastapi": "cd backend/fastapi && uvicorn main:app --reload"
+    "frontend": "cd frontend && npx vite",
+    "backend:fastapi": "cd backend/fastapi && uvicorn main:app --reload --port 8000",
+    "fastapi": "concurrently \"npm run frontend\" \"npm run backend:fastapi\""
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "concurrently": "^8.2.2"
+  }
 }

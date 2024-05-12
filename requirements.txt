@@ -1,0 +1,7 @@
+fastapi
+sqlmodel
+psycopg2
+httpx
+uvicorn
+pytest
+python-dotenv

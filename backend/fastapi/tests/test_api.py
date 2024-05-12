@@ -5,8 +5,8 @@ import pytest
 from sqlmodel import SQLModel, create_engine, StaticPool, Session
 from sqlalchemy.orm import sessionmaker
 
-from routers.items import router as items_router
-from db.core import get_db
+from src.routers.items import router as items_router
+from src.db.core import get_db
 
 
 app = FastAPI()

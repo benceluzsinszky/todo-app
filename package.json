@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "frontend": "cd frontend && npx vite",
-    "backend:fastapi": "cd backend/fastapi && uvicorn main:app --reload --port 8000",
+    "backend:fastapi": "cd backend/fastapi/src && uvicorn main:app --reload --port 8000",
     "fastapi": "concurrently \"npm run frontend\" \"npm run backend:fastapi\""
   },
   "keywords": [],

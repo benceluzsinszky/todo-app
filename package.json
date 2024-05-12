@@ -1,0 +1,12 @@
+{
+  "name": "todo_app",
+  "version": "1.0.0",
+  "description": "A todo app with React frontend and various backend implementations.",
+  "main": "index.js",
+  "scripts": {
+    "fastapi": "cd backend/fastapi && uvicorn main:app --reload"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

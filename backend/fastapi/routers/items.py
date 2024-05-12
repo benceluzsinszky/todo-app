@@ -2,7 +2,8 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlmodel import Session
 from sqlalchemy.exc import NoResultFound
 
-from src.db.todo_item import (
+
+from db.todo_item import (
     TodoItem,
     create_db_todo_item,
     read_db_todo_item,
@@ -11,7 +12,7 @@ from src.db.todo_item import (
     delete_db_todo_item,
 )
 
-from src.db.core import get_db
+from db.core import get_db
 
 router = APIRouter(
     prefix="/items",

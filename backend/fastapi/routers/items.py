@@ -39,7 +39,7 @@ async def read_item(id: int, db: Session = Depends(get_db)) -> TodoItem:
     try:
         item = read_db_todo_item(id, db)
     except NoResultFound:
-        raise HTTPException(status_code=404, detail=f"Item with {id} not found")
+        raise HTTPException(status_code=404, detail=f"Item with id {id} not found")
 
     return item
 
@@ -51,7 +51,7 @@ async def update_item(
     try:
         item = update_db_todo_item(id, updated_item, db)
     except NoResultFound:
-        raise HTTPException(status_code=404, detail=f"Item with {id} not found")
+        raise HTTPException(status_code=404, detail=f"Item with id {id} not found")
 
     return item
 
@@ -61,6 +61,6 @@ async def delete_item(id: int, db: Session = Depends(get_db)) -> TodoItem:
     try:
         item = delete_db_todo_item(id, db)
     except NoResultFound:
-        raise HTTPException(status_code=404, detail=f"Item with {id} not found")
+        raise HTTPException(status_code=404, detail=f"Item with id {id} not found")
 
     return item

@@ -46,7 +46,7 @@ export default function AddItem() {
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyUp={handleKeyPress}></input>
-            <button className="additem-button" onClick={addNewItem}>ADD</button>
+            <button className="additem-button" onClick={addNewItem}><img src="../../public/add.png" alt="Add button" /></button>
         </div>
     )
 }

@@ -52,10 +52,10 @@ export default function TodoItemBox({ item }: TodoItemBoxProps) {
     };
 
     return (
-        <div className="todo">
+        <div className="todo" style={{ color: item.completed ? 'rgba(255, 255, 255, 0.3)' : 'inherit' }}>
             <input type="checkbox" checked={isChecked} className="todo-checkbox" onChange={handleCheckbox}></input>
-            <div className="todo-description">{item.description}</div>
-            <button className="todo-delete" onClick={handleDelete}>DEL</button>
+            <div className={`todo-description ${item.completed ? 'completed' : ''}`}>{item.description}</div>
+            <button className="todo-delete" onClick={handleDelete}><img src="../../public/delete.png" alt="Delete button" /></button>
         </div>
     )
 }

@@ -20,14 +20,13 @@ export default function TodoItemBox({ item }: TodoItemBoxProps) {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
+                    date_added: item.date_added,
                     completed: newCheckedState
                 })
             });
             if (!response.ok) {
                 throw new Error('Failed to update todo item');
             }
-
-            // TODO: checked item completed state is not stored
             fetchTodoItems();
             setIsChecked(newCheckedState);
 

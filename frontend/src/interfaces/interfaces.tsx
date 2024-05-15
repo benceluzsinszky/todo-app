@@ -3,5 +3,5 @@ export interface TodoItem {
     description: string
     completed: boolean
     date_added: Date
-    date_completed: Date | null
+    date_completed: Date
 }

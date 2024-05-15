@@ -10,12 +10,15 @@ export default function TodoContainer() {
     function fillTodos(completed: boolean) {
         return (
             todoItems
-                .sort((a, b) => b.id - a.id)
-                .map((item) => {
-                    if (item.completed === completed) {
-                        return <TodoItemBox key={item.id} item={item} />
+                .filter(item => item.completed === completed)
+                .sort((a, b) => {
+                    if (completed) {
+                        return new Date(b.date_completed).getTime() - new Date(a.date_completed).getTime();
+                    } else {
+                        return b.id - a.id;
                     }
                 })
+                .map(item => <TodoItemBox key={item.id} item={item} />)
         )
     }
 

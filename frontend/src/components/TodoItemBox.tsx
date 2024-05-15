@@ -9,7 +9,7 @@ interface TodoItemBoxProps {
 export default function TodoItemBox({ item }: TodoItemBoxProps) {
 
     const [isChecked, setIsChecked] = useState(item.completed);
-    const { todoItems, setTodoItems } = useContext(TodoItemContext);
+    const { setTodoItems, fetchTodoItems } = useContext(TodoItemContext);
 
     const handleCheckbox = async (event: React.ChangeEvent<HTMLInputElement>) => {
         const newCheckedState = event.target.checked;
@@ -28,6 +28,7 @@ export default function TodoItemBox({ item }: TodoItemBoxProps) {
             }
 
             // TODO: checked item completed state is not stored
+            fetchTodoItems();
             setIsChecked(newCheckedState);
 
         }

@@ -33,11 +33,19 @@ export default function AddItem() {
         }
     };
 
+    const handleKeyPress = (event: React.KeyboardEvent) => {
+        if (event.key === 'Enter') {
+            addNewItem();
+        }
+    };
+
+
     return (
         <>
             <input className="additem-input"
                 value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}></input>
+                onChange={(e) => setInputValue(e.target.value)}
+                onKeyUp={handleKeyPress}></input>
             <button className="additem-button" onClick={addNewItem}>ADD</button>
         </>
     )

@@ -1,13 +1,15 @@
 html {
-  height: 100%;
+  background-color: #000000;
 }
 
 body {
-  background-color: #000000;
+  background-color: transparent;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
   color: rgb(255, 255, 255, 0.9);
   font-family: Poppins, sans-serif;
   font-size: 18px;
-  height: 100%;
 }
 
 #root {
@@ -41,19 +43,19 @@ body {
   width: 50px;
 }
 
-.parent img {
-  width: 30px;
-  height: 30px;
-}
 
 .parent button:hover {
   opacity: 0.75;
   border: none;
 }
 
-.parent ul {
-  list-style-type: none;
-  padding: 0;
+.parent button:focus {
+  outline: none;
+}
+
+.parent img {
+  width: 30px;
+  height: 30px;
 }
 
 .additem {
@@ -104,6 +106,7 @@ body {
   display: flex;
   align-items: center;
   text-align: left;
+  overflow: hidden;
   cursor: default;
   padding: 10px;
   border-right: 2px solid rgb(255, 255, 255, 0.1);

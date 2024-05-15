@@ -49,6 +49,10 @@ body {
   border-bottom: 2px solid rgb(255, 255, 255, 0.5);
 }
 
+.additem:hover {
+  border-bottom: 2px solid rgb(255, 255, 255, 0.7);
+}
+
 .additem-input {
   grid-area: 1 / 1 / 2 / 3;
   border: 0;
@@ -68,6 +72,10 @@ body {
 .todo {
   border: 2px solid rgb(255, 255, 255, 0.5);
   border-radius: 8px;
+}
+
+.todo:hover {
+  border: 2px solid rgb(255, 255, 255, 0.6);
 }
 
 .todo-checkbox {

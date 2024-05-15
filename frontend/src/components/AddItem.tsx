@@ -26,7 +26,7 @@ export default function AddItem() {
                 throw new Error('Failed to add new item');
             }
             const addedItem = await response.json();
-            setTodoItems((prevItems: TodoItem[]) => [...prevItems, addedItem]);
+            setTodoItems((prevItems: TodoItem[]) => [addedItem, ...prevItems]);
             setInputValue('');
         } catch (error) {
             console.error(error);

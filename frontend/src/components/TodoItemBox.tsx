@@ -20,7 +20,7 @@ export default function TodoItemBox({ item }: TodoItemBoxProps) {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    completed: isChecked
+                    completed: newCheckedState
                 })
             });
             if (!response.ok) {

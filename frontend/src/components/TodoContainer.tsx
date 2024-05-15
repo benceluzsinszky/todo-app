@@ -9,11 +9,13 @@ export default function TodoContainer() {
 
     function fillTodos(completed: boolean) {
         return (
-            todoItems.map((item) => {
-                if (item.completed === completed) {
-                    return <TodoItemBox key={item.id} item={item} />
-                }
-            })
+            todoItems
+                .sort((a, b) => b.id - a.id)
+                .map((item) => {
+                    if (item.completed === completed) {
+                        return <TodoItemBox key={item.id} item={item} />
+                    }
+                })
         )
     }
 

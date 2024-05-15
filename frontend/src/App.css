@@ -1,3 +1,15 @@
+html {
+  height: 100%;
+}
+
+body {
+  background-color: #000000;
+  color: rgb(255, 255, 255, 0.9);
+  font-family: Poppins, sans-serif;
+  font-size: 18px;
+  height: 100%;
+}
+
 #root {
   max-width: 1280px;
   margin: 0 auto;
@@ -6,22 +18,63 @@
 }
 
 .parent {
+  position: absolute;
+  top: 25%;
+  transform: translate(-50%);
+}
+
+.parent>div {
   display: grid;
-  grid-template-columns: repeat(1fr, 3fr, 1fr);
-  row-gap: 10px;
-  column-gap: 10px;
+  grid-template-columns: 50px 400px 50px;
+  width: 500px;
+  margin-bottom: 15px;
+}
+
+.parent button {
+  padding: 0;
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+  color: rgb(255, 255, 255, 0.4);
+  width: 50px;
+}
+
+.parent button:hover {
+  color: rgb(255, 255, 255, 0.6);
+  border: none;
+}
+
+.additem {
+  padding-bottom: 2px;
+  border-bottom: 2px solid rgb(255, 255, 255, 0.5);
 }
 
 .additem-input {
   grid-area: 1 / 1 / 2 / 3;
+  border: 0;
+  background-color: transparent;
+  font-size: 18px;
+}
+
+.additem-input:focus {
+  outline: none;
+  border: none;
 }
 
 .additem-button {
   grid-area: 1 / 3 / 2 / 4;
 }
 
+.todo {
+  border: 2px solid rgb(255, 255, 255, 0.5);
+  border-radius: 8px;
+}
+
 .todo-checkbox {
   grid-column: 1;
+  width: 20px;
+  cursor: pointer;
+  justify-self: center;
 }
 
 .todo-description {
@@ -29,9 +82,13 @@
   display: flex;
   align-items: center;
   text-align: left;
-  width: 500px;
+  cursor: default;
+  padding: 10px;
+  border-right: 2px solid rgb(255, 255, 255, 0.1);
+  border-left: 2px solid rgb(255, 255, 255, 0.1);
 }
 
 .todo-delete {
+  padding: 10px;
   grid-column: 3;
 }

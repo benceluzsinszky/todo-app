@@ -41,12 +41,12 @@ export default function AddItem() {
 
 
     return (
-        <>
+        <div className="additem">
             <input className="additem-input"
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyUp={handleKeyPress}></input>
             <button className="additem-button" onClick={addNewItem}>ADD</button>
-        </>
+        </div>
     )
 }

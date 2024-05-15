@@ -53,10 +53,10 @@ export default function TodoItemBox({ item }: TodoItemBoxProps) {
     };
 
     return (
-        <>
+        <div className="todo">
             <input type="checkbox" checked={isChecked} className="todo-checkbox" onChange={handleCheckbox}></input>
             <div className="todo-description">{item.description}</div>
             <button className="todo-delete" onClick={handleDelete}>DEL</button>
-        </>
+        </div>
     )
 }

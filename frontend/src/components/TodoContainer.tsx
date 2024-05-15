@@ -1,3 +1,4 @@
+import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { useContext } from "react";
 import { TodoItemContext } from "../GlobalContext";
 import AddItem from "./AddItem";
@@ -6,6 +7,9 @@ import TodoItemBox from "./TodoItemBox";
 export default function TodoContainer() {
 
     const { todoItems } = useContext(TodoItemContext);
+
+    const [parent] = useAutoAnimate<HTMLDivElement>();
+
 
     function fillTodos(completed: boolean) {
         return (
@@ -25,8 +29,10 @@ export default function TodoContainer() {
     return (
         <div className="parent">
             <AddItem />
-            {fillTodos(false)}
-            {fillTodos(true)}
+            <div ref={parent}>
+                {fillTodos(false)}
+                {fillTodos(true)}
+            </div>
         </div>
     )
 }

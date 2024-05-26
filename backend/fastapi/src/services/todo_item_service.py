@@ -1,6 +1,6 @@
 from sqlmodel import Session, select
 from datetime import datetime, timezone
-from src.db.models import TodoItem
+from src.models.models import TodoItem
 
 
 def create_db_todo_item(item: TodoItem, session: Session) -> TodoItem:

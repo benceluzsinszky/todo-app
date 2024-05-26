@@ -1,5 +1,6 @@
 from sqlmodel import SQLModel, Field, Relationship
 from datetime import datetime, timezone
+from pydantic import BaseModel
 
 
 class User(SQLModel, table=True):
@@ -23,3 +24,12 @@ class TodoItem(SQLModel, table=True):
 
     user_id: int = Field(foreign_key="user.id")
     user: User = Relationship(back_populates="todo_items")
+
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+
+
+class TokenData(BaseModel):
+    username: str

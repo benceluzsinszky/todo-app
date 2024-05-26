@@ -1,5 +1,5 @@
 from sqlmodel import Session, select
-from src.db.models import User
+from src.models.models import User
 from src.auth.auth import get_password_hash
 
 

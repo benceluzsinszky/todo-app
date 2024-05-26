@@ -1,10 +1,10 @@
-from fastapi import APIRouter, Depends, HTTPException
 from typing import Annotated
-from src.auth.auth import get_current_user
+from fastapi import APIRouter, Depends, HTTPException
 from sqlmodel import Session
 from sqlalchemy.exc import NoResultFound, IntegrityError
 
 
+from src.routers.auth_router import get_current_user
 from src.services.user_service import (
     User,
     create_db_user,
@@ -20,8 +20,10 @@ router = APIRouter(
 
 
 @router.get("/me")
-async def read_current_user(token: Annotated[str, Depends(get_current_user)]) -> User:
-    return {"token": token}
+async def read_current_user(
+    current_user: Annotated[User, Depends(get_current_user)],
+) -> str:
+    return current_user.username
 
 
 @router.post("/")

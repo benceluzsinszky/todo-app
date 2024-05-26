@@ -6,7 +6,8 @@
   "scripts": {
     "frontend": "cd frontend && npx vite",
     "backend:fastapi": "cd backend/fastapi && uvicorn main:app --reload --port 8000",
-    "fastapi": "concurrently \"npm run frontend\" \"npm run backend:fastapi\""
+    "fastapi": "concurrently \"npm run frontend\" \"npm run backend:fastapi\"",
+    "dpycache": "Get-ChildItem -Path . -Include __pycache__ -Recurse -Directory | Remove-Item -Recurse -Force"
   },
   "keywords": [],
   "author": "",

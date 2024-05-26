@@ -1,11 +1,15 @@
 from fastapi import FastAPI
 
-from src.routers.items import router as items_router
+from src.routers.auth_router import router as auth_router
+from src.routers.items_router import router as items_router
+from src.routers.users_router import router as users_router
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 
 app = FastAPI()
+app.include_router(auth_router)
 app.include_router(items_router)
+app.include_router(users_router)
 
 origins = [
     "http://localhost:5173",

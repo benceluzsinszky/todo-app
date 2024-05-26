@@ -5,7 +5,7 @@ import pytest
 from sqlmodel import SQLModel, create_engine, StaticPool, Session
 from sqlalchemy.orm import sessionmaker
 
-from src.routers.items import router as items_router
+from backend.fastapi.src.routers.items_router import router as items_router
 from src.db.core import get_db
 
 

@@ -1,15 +1,6 @@
-from sqlmodel import SQLModel, Session, Field, select
+from sqlmodel import Session, select
 from datetime import datetime, timezone
-
-
-class TodoItem(SQLModel, table=True):
-    __tablename__ = "todo_item"
-
-    id: int | None = Field(default=None, primary_key=True)
-    description: str
-    date_added: datetime = Field(default=datetime.now(timezone.utc))
-    date_completed: datetime | None = None
-    completed: bool = False
+from src.db.models import TodoItem
 
 
 def create_db_todo_item(item: TodoItem, session: Session) -> TodoItem:
@@ -28,8 +19,8 @@ def read_db_todo_item(id: int, session: Session) -> TodoItem:
     return item
 
 
-def read_db_all_todo_items(session: Session) -> list:
-    statement = select(TodoItem)
+def read_db_all_todo_items_of_user(user_id: int, session: Session) -> list:
+    statement = select(TodoItem).where(TodoItem.user_id == user_id)
     results = session.exec(statement)
     items = results.all()
 

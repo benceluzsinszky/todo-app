@@ -1,11 +1,8 @@
 from sqlmodel import SQLModel, Session, create_engine
 from sqlalchemy.orm import sessionmaker
-import os
-from dotenv import load_dotenv
 
-load_dotenv()
+from src.constants import DATABASE_URL
 
-DATABASE_URL = os.environ["DATABASE_URL"]
 
 engine = create_engine(DATABASE_URL)
 session_local = sessionmaker(

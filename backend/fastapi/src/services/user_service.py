@@ -1,10 +1,10 @@
 from sqlmodel import Session, select
 from src.models.models import User
-from src.auth.auth import get_password_hash
+from src.constants import PWD_CONTEXT
 
 
 def create_db_user(user: User, session: Session) -> User:
-    user.password = get_password_hash(user.password)
+    user.password = PWD_CONTEXT.hash(user.password)
     session.add(user)
     session.commit()
     session.refresh(user)

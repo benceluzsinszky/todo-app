@@ -4,7 +4,7 @@ from sqlmodel import Session
 from sqlalchemy.exc import NoResultFound, IntegrityError
 
 
-from src.routers.auth_router import get_current_user
+from src.services.auth_services import get_current_user
 from src.services.user_service import (
     User,
     create_db_user,
@@ -36,22 +36,28 @@ async def create_user(user: User, db: Session = Depends(get_db)) -> User:
     return user
 
 
-@router.put("/{id}")
+@router.put("/me")
 async def update_User(
-    id: int, updated_user: User, db: Session = Depends(get_db)
+    current_user: Annotated[User, Depends(get_current_user)],
+    updated_user: User,
+    db: Session = Depends(get_db),
 ) -> User:
+    user_id = current_user.id
     try:
-        user = update_db_user(id, updated_user, db)
+        user = update_db_user(user_id, updated_user, db)
     except NoResultFound:
-        raise HTTPException(status_code=404, detail=f"User with id {id} not found")
+        raise HTTPException(status_code=404, detail=f"User with id {user_id} not found")
 
     return user
 
 
-@router.delete("/{id}")
-async def delete_user(id: int, db: Session = Depends(get_db)) -> User:
+@router.delete("/me")
+async def delete_user(
+    current_user: Annotated[User, Depends(get_current_user)],
+    db: Session = Depends(get_db),
+) -> User:
     try:
-        user = delete_db_user(id, db)
+        user = delete_db_user(current_user.id, db)
     except NoResultFound:
         raise HTTPException(status_code=404, detail=f"User with id {id} not found")
 

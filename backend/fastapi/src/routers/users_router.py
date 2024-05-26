@@ -28,6 +28,8 @@ async def read_current_user(
 
 @router.post("/")
 async def create_user(user: User, db: Session = Depends(get_db)) -> User:
+    if not user.username or not user.password:
+        raise HTTPException(status_code=400, detail="Username and password required")
     try:
         user = create_db_user(user, db)
     except IntegrityError:

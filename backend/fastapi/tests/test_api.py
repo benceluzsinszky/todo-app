@@ -92,6 +92,31 @@ def test_item2(authenticated_client):
     return response.json()
 
 
+class TestAuthRouter:
+    def test_login_shouldreturntokenwhenuserisauthenticated(self, test_user):
+        # Act
+        response = client.post("/token", data={"username": "test", "password": "test"})
+        # Assert
+        assert response.status_code == 200, response.text
+        data = response.json()
+        assert "access_token" in data
+        assert data["token_type"] == "bearer"
+
+    def test_login_shouldreturnerrorwhenuserdoesnotexist(self, test_user):
+        # Act
+        response = client.post("/token", data={"username": "wrong", "password": "test"})
+        # Assert
+        assert response.status_code == 401, response.text
+        assert response.text == '{"detail":"Incorrect username or password"}'
+
+    def test_login_shouldreturnerrorwhenpasswordiswrong(self, test_user):
+        # Act
+        response = client.post("/token", data={"username": "test", "password": "wrong"})
+        # Assert
+        assert response.status_code == 401, response.text
+        assert response.text == '{"detail":"Incorrect username or password"}'
+
+
 class TestUsersRouter:
     def test_create_user_shouldreturnuserwhenuseriscreated(self):
         # Act
@@ -107,6 +132,20 @@ class TestUsersRouter:
         # Assert
         assert response.status_code == 409, response.text
         assert response.text == '{"detail":"User already exists"}'
+
+    def test_create_user_shouldreturnerrorwhenusernameisempty(self):
+        # Act
+        response = client.post("/users/", json={"username": "", "password": "test"})
+        # Assert
+        assert response.status_code == 400, response.text
+        assert response.text == '{"detail":"Username and password required"}'
+
+    def test_create_user_shouldreturnerrorwhenpasswordisempty(self):
+        # Act
+        response = client.post("/users/", json={"username": "test", "password": ""})
+        # Assert
+        assert response.status_code == 400, response.text
+        assert response.text == '{"detail":"Username and password required"}'
 
     def test_read_current_user_shouldreturnuserwhenuserexists(
         self, test_user, authenticated_client
@@ -126,6 +165,19 @@ class TestUsersRouter:
         # Assert
         assert response.status_code == 401, response.text
         assert response.text == '{"detail":"Not authenticated"}'
+
+    def test_read_current_user_shouldreturnerrorwhentokeniswrong(self, test_user):
+        # Arrange
+        wrong_token = "wrongtoken"
+        client.headers = {
+            **client.headers,
+            "Authorization": f"Bearer {wrong_token}",
+        }
+        # Act
+        response = client.get("/users/me")
+        # Assert
+        assert response.status_code == 401, response.text
+        assert response.text == '{"detail":"Could not validate credentials"}'
 
     def test_update_user_shouldreturnuserwithupdatedusername(
         self, test_user, authenticated_client

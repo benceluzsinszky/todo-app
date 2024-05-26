@@ -1,7 +1,7 @@
 from typing import Annotated
 from fastapi import APIRouter, Depends, HTTPException
 from sqlmodel import Session
-from sqlalchemy.exc import NoResultFound, IntegrityError
+from sqlalchemy.exc import IntegrityError
 
 
 from src.services.auth_services import get_current_user
@@ -22,8 +22,8 @@ router = APIRouter(
 @router.get("/me")
 async def read_current_user(
     current_user: Annotated[User, Depends(get_current_user)],
-) -> str:
-    return current_user.username
+) -> User:
+    return current_user
 
 
 @router.post("/")
@@ -42,11 +42,7 @@ async def update_User(
     updated_user: User,
     db: Session = Depends(get_db),
 ) -> User:
-    user_id = current_user.id
-    try:
-        user = update_db_user(user_id, updated_user, db)
-    except NoResultFound:
-        raise HTTPException(status_code=404, detail=f"User with id {user_id} not found")
+    user = update_db_user(current_user, updated_user, db)
 
     return user
 
@@ -56,9 +52,6 @@ async def delete_user(
     current_user: Annotated[User, Depends(get_current_user)],
     db: Session = Depends(get_db),
 ) -> User:
-    try:
-        user = delete_db_user(current_user.id, db)
-    except NoResultFound:
-        raise HTTPException(status_code=404, detail=f"User with id {id} not found")
+    user = delete_db_user(current_user, db)
 
     return user

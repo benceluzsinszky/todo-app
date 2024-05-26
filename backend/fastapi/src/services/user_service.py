@@ -20,8 +20,7 @@ def read_db_user(username: str, session: Session) -> User:
     return user
 
 
-def update_db_user(id: int, updated_user: User, session: Session) -> User:
-    user = read_db_user(id, session)
+def update_db_user(user: User, updated_user: User, session: Session) -> User:
     for key, value in updated_user.model_dump(exclude_none=True).items():
         setattr(user, key, value)
     session.commit()
@@ -30,8 +29,7 @@ def update_db_user(id: int, updated_user: User, session: Session) -> User:
     return user
 
 
-def delete_db_user(id: int, session: Session) -> User:
-    user = read_db_user(id, session)
+def delete_db_user(user: User, session: Session) -> User:
     session.delete(user)
     session.commit()
 

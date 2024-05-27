@@ -23,7 +23,7 @@ body {
 
 .login {
   position: absolute;
-  top: 33%;
+  top: 30%;
   transform: translate(-50%);
 }
 
@@ -49,6 +49,7 @@ body {
   background-color: transparent;
   border: none;
   opacity: 0.4;
+  width: 250px;
 }
 
 .login button:hover {

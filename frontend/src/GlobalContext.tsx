@@ -5,7 +5,11 @@ interface TodoItemContextValue {
     todoItems: TodoItem[];
     setTodoItems: Function;
     fetchTodoItems: Function;
+}
+
+interface IsLoggedInContextValue {
     isLoggedIn: boolean;
+    setIsLoggedIn: Function;
 }
 
 interface GlobalContextProps {
@@ -16,7 +20,11 @@ export const TodoItemContext = createContext<TodoItemContextValue>({
     todoItems: [],
     setTodoItems: () => { },
     fetchTodoItems: () => { },
-    isLoggedIn: false
+});
+
+export const IsLoggedInContext = createContext<IsLoggedInContextValue>({
+    isLoggedIn: false,
+    setIsLoggedIn: () => { },
 });
 
 export default function GlobalContext({ children }: GlobalContextProps) {
@@ -24,17 +32,19 @@ export default function GlobalContext({ children }: GlobalContextProps) {
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
     const fetchTodoItems = async () => {
-        await fetch('http://localhost:8000/items/')
+        if (!isLoggedIn) return;
+        const token = localStorage.getItem('token');
+        await fetch('http://localhost:8000/items/', {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        })
             .then(response => {
-                if (!response.ok) {
-                    setIsLoggedIn(false);
-                    throw new Error('Not logged in');
-                }
                 return response.json();
             })
             .then(data => {
                 setTodoItems(data);
-                setIsLoggedIn(true);
                 console.log(data);
             })
             .catch(error => {
@@ -47,8 +57,10 @@ export default function GlobalContext({ children }: GlobalContextProps) {
     }, []);
 
     return (
-        <TodoItemContext.Provider value={{ todoItems, setTodoItems, fetchTodoItems, isLoggedIn }}>
-            {children}
-        </TodoItemContext.Provider>
+        <IsLoggedInContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
+            <TodoItemContext.Provider value={{ todoItems, setTodoItems, fetchTodoItems }}>
+                {children}
+            </TodoItemContext.Provider>
+        </IsLoggedInContext.Provider>
     )
 };

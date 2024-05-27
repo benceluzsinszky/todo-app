@@ -26,8 +26,6 @@ async def read_all_todo_items_of_user(
     db: Session = Depends(get_db),
 ) -> list:
     items = read_db_all_todo_items_of_user(user_id=current_user.id, session=db)
-    if not items:
-        raise HTTPException(status_code=404, detail="No items in DB")
 
     return items
 

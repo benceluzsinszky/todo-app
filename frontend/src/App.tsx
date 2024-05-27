@@ -1,12 +1,15 @@
-import './App.css'
-import GlobalContext from './GlobalContext'
-import TodoContainer from './components/TodoContainer'
+import { useContext } from 'react';
+import './App.css';
+import GlobalContext, { TodoItemContext } from './GlobalContext';
+import LoginForm from './components/LoginForm';
+import TodoContainer from './components/TodoContainer';
 
 function App() {
+  const { isLoggedIn } = useContext(TodoItemContext);
 
   return (
     <GlobalContext>
-      <TodoContainer></TodoContainer>
+      {isLoggedIn ? <TodoContainer /> : <LoginForm />}
     </GlobalContext>
   )
 }

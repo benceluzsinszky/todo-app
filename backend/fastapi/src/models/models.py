@@ -10,7 +10,9 @@ class User(SQLModel, table=True):
     username: str = Field(unique=True)
     password: str = Field()
 
-    todo_items: list["TodoItem"] = Relationship(back_populates="user")
+    todo_items: list["TodoItem"] = Relationship(
+        sa_relationship_kwargs={"cascade": "delete"}, back_populates="user"
+    )
 
 
 class TodoItem(SQLModel, table=True):

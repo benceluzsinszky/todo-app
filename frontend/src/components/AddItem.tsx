@@ -12,10 +12,12 @@ export default function AddItem() {
         if (inputValue === '') {
             return;
         }
+        const token = localStorage.getItem('token');
         try {
             const response = await fetch('http://localhost:8000/items/', {
                 method: 'POST',
                 headers: {
+                    'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({

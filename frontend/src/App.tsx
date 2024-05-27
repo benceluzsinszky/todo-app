@@ -1,17 +1,12 @@
-import { useContext } from 'react';
 import './App.css';
-import GlobalContext, { IsLoggedInContext } from './GlobalContext';
-import LoginForm from './components/LoginForm';
-import TodoContainer from './components/TodoContainer';
+import GlobalContext from './GlobalContext';
+import Root from './components/Root';
 
 function App() {
-  const { isLoggedIn } = useContext(IsLoggedInContext);
 
   return (
     <GlobalContext>
-
-      <button onClick={() => console.log(isLoggedIn)}>Check</button>
-      {isLoggedIn ? <TodoContainer /> : <LoginForm />}
+      <Root />
     </GlobalContext>
   )
 }

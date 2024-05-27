@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import { IsLoggedInContext } from "../GlobalContext";
 
 export default function LoginForm() {
-    const { isLoggedIn, setIsLoggedIn } = useContext(IsLoggedInContext);
+    const { setIsLoggedIn } = useContext(IsLoggedInContext);
 
     const [isRegistering, setIsRegistering] = useState(false);
 
@@ -71,14 +71,12 @@ export default function LoginForm() {
                     console.log(data);
                     localStorage.setItem('token', data.access_token);
                     setIsLoggedIn(true);
-                    console.log(isLoggedIn);
                 })
                 .catch(error => {
                     alert(error);
                 });
         }
     };
-
 
     return (
         <div className="login">

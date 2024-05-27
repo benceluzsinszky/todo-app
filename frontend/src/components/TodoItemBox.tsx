@@ -13,10 +13,12 @@ export default function TodoItemBox({ item }: TodoItemBoxProps) {
 
     const handleCheckbox = async (event: React.ChangeEvent<HTMLInputElement>) => {
         const newCheckedState = event.target.checked;
+        const token = localStorage.getItem('token');
         try {
             const response = await fetch(`http://localhost:8000/items/${item.id}`, {
                 method: 'PUT',
                 headers: {
+                    'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
@@ -37,9 +39,14 @@ export default function TodoItemBox({ item }: TodoItemBoxProps) {
     };
 
     const handleDelete = async () => {
+        const token = localStorage.getItem('token');
         try {
             const response = await fetch(`http://localhost:8000/items/${item.id}`, {
                 method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
             });
             if (!response.ok) {
                 throw new Error('Failed to delete todo item');

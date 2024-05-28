@@ -116,6 +116,68 @@ class TestAuthRouter:
         assert response.status_code == 401, response.text
         assert response.text == '{"detail":"Incorrect username or password"}'
 
+    def test_login_shouldreturnuserwhentwotokensareusedandnoneisexpired(
+        self, test_user
+    ):
+        # Arrange
+        response = client.post("/token", data={"username": "test", "password": "test"})
+        token_1 = response.json()["access_token"]
+
+        # Act
+        client.headers["Authorization"] = f"Bearer {token_1}"
+        response = client.get("/users/me")
+
+        # Assert
+        assert response.status_code == 200, response.text
+        data = response.json()
+        assert data["username"] == "test"
+
+        # Arrange
+        response = client.post("/token", data={"username": "test", "password": "test"})
+        token_2 = response.json()["access_token"]
+
+        # Act
+        client.headers["Authorization"] = f"Bearer {token_2}"
+        response = client.get("/users/me")
+
+        # Assert
+        assert response.status_code == 200, response.text
+        data = response.json()
+        assert data["username"] == "test"
+
+        # Act
+        client.headers["Authorization"] = f"Bearer {token_1}"
+        response = client.get("/users/me")
+
+        # Assert
+        assert response.status_code == 200, response.text
+        data = response.json()
+        assert data["username"] == "test"
+
+    def test_login_shouldreturntwouserswhentwousersareauthenticated(self, test_user):
+        # Arrange
+        client.post("/users/", json={"username": "test2", "password": "test2"})
+        response = client.post("/token", data={"username": "test", "password": "test"})
+        token_1 = response.json()["access_token"]
+
+        response = client.post(
+            "/token", data={"username": "test2", "password": "test2"}
+        )
+        token_2 = response.json()["access_token"]
+
+        # Act
+        client.headers["Authorization"] = f"Bearer {token_1}"
+        response = client.get("/users/me")
+        data_1 = response.json()
+
+        client.headers["Authorization"] = f"Bearer {token_2}"
+        response = client.get("/users/me")
+        data_2 = response.json()
+
+        # Assert
+        assert data_1["username"] == "test"
+        assert data_2["username"] == "test2"
+
 
 class TestUsersRouter:
     def test_create_user_shouldreturnuserwhenuseriscreated(self):
@@ -230,14 +292,14 @@ class TestItemsRouter:
         assert data[1]["description"] == test_item2["description"]
         assert data[1]["id"] == test_item2["id"]
 
-    def test_read_all_items_shouldreturnerrorwhennoitemsindb(
+    def test_read_all_items_shouldreturnemptylistwhennoitemsindb(
         self, authenticated_client
     ):
         # Act
         response = authenticated_client.get("/items/")
         # Assert
-        assert response.status_code == 404
-        assert response.text == '{"detail":"No items in DB"}'
+        data = response.json()
+        assert len(data) == 0
 
     def test_update_item_shouldreturnitemwithupdateddescription(
         self, test_item, authenticated_client
@@ -289,8 +351,8 @@ class TestItemsRouter:
         assert data["id"] == test_item["id"]
         # Try to get the deleted item
         response = authenticated_client.get("/items/")
-        assert response.status_code == 404, response.text
-        assert response.text == '{"detail":"No items in DB"}'
+        data = response.json()
+        assert len(data) == 0
 
     def test_delete_item_shouldraiseerrorwhenitemisnotindb(self, authenticated_client):
         # Act

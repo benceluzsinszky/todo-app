@@ -4,7 +4,7 @@ import LoginForm from "./LoginForm";
 import TodoContainer from "./TodoContainer";
 
 
-export default function Root() {
+export default function HomePage() {
     const { isLoggedIn } = useContext(IsLoggedInContext);
 
     return (

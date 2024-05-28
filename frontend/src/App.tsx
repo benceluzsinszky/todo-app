@@ -1,12 +1,12 @@
 import './App.css';
 import GlobalContext from './GlobalContext';
-import Root from './components/Root';
+import HomePage from './components/HomePage';
 
 function App() {
 
   return (
     <GlobalContext>
-      <Root />
+      <HomePage />
     </GlobalContext>
   )
 }

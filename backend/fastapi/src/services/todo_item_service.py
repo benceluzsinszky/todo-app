@@ -1,6 +1,6 @@
 from sqlmodel import Session, select
 from datetime import datetime, timezone
-from src.models.models import TodoItem
+from src.models.models import TodoItem, User
 
 
 def create_db_todo_item(item: TodoItem, session: Session) -> TodoItem:
@@ -19,10 +19,9 @@ def read_db_todo_item(id: int, session: Session) -> TodoItem:
     return item
 
 
-def read_db_all_todo_items_of_user(user_id: int, session: Session) -> list:
-    statement = select(TodoItem).where(TodoItem.user_id == user_id)
-    results = session.exec(statement)
-    items = results.all()
+def read_db_all_todo_items_of_user(user: User, session: Session) -> list:
+    session.refresh(user)
+    items = user.todo_items
 
     return items
 

@@ -25,7 +25,7 @@ async def read_all_todo_items_of_user(
     current_user: Annotated[User, Depends(get_current_user)],
     db: Session = Depends(get_db),
 ) -> list:
-    items = read_db_all_todo_items_of_user(user_id=current_user.id, session=db)
+    items = read_db_all_todo_items_of_user(user=current_user, session=db)
 
     return items
 

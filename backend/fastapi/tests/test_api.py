@@ -10,7 +10,6 @@ from src.routers.items_router import router as items_router
 from src.routers.users_router import router as users_router
 from src.db.core import get_db
 
-
 app = FastAPI()
 app.include_router(auth_router)
 app.include_router(items_router)
@@ -53,6 +52,7 @@ def run_before_and_after_tests():
 
     # Teardown
     SQLModel.metadata.drop_all(bind=engine)
+    client.headers["Authorization"] = ""
 
 
 @pytest.fixture
@@ -63,19 +63,14 @@ def test_user():
 
 
 @pytest.fixture
-def authenticated_client():
+def authenticated_client(test_user):
     """Fixture to authenticate a client"""
-    auth_client = TestClient(app)
-    auth_client.post("/users/", json={"username": "test", "password": "test"})
-    response = auth_client.post("/token", data={"username": "test", "password": "test"})
+    response = client.post("/token", data={"username": "test", "password": "test"})
 
     token = response.json()["access_token"]
-    auth_client.headers = {
-        **auth_client.headers,
-        "Authorization": f"Bearer {token}",
-    }
+    client.headers["Authorization"] = f"Bearer {token}"
 
-    return auth_client
+    return client
 
 
 @pytest.fixture
@@ -213,7 +208,7 @@ class TestUsersRouter:
         self, test_user, authenticated_client
     ):
         # Act
-        response = authenticated_client.get("/users/me")
+        response = client.get("/users/me")
         # Assert
         assert response.status_code == 200, response.text
         data = response.json()
@@ -231,10 +226,7 @@ class TestUsersRouter:
     def test_read_current_user_shouldreturnerrorwhentokeniswrong(self, test_user):
         # Arrange
         wrong_token = "wrongtoken"
-        client.headers = {
-            **client.headers,
-            "Authorization": f"Bearer {wrong_token}",
-        }
+        client.headers["Authorization"] = f"Bearer {wrong_token}"
         # Act
         response = client.get("/users/me")
         # Assert
@@ -245,7 +237,7 @@ class TestUsersRouter:
         self, test_user, authenticated_client
     ):
         # Act
-        response = authenticated_client.put("/users/me", json={"username": "updated"})
+        response = client.put("/users/me", json={"username": "updated"})
         # Assert
         assert response.status_code == 200, response.text
         data = response.json()
@@ -255,13 +247,13 @@ class TestUsersRouter:
         self, test_user, authenticated_client
     ):
         # Act
-        response = authenticated_client.delete("/users/me")
+        response = client.delete("/users/me")
         # Assert
         assert response.status_code == 200, response.text
         data = response.json()
         assert data["username"] == "test"
         # Try to get the deleted user
-        response = authenticated_client.get("/users/me")
+        response = client.get("/users/me")
         assert response.status_code == 401, response.text
         assert response.text == '{"detail":"Could not validate credentials"}'
 
@@ -269,9 +261,7 @@ class TestUsersRouter:
 class TestItemsRouter:
     def test_create_item_shouldreturnitemwhenitemiscreated(self, authenticated_client):
         # Act
-        response = authenticated_client.post(
-            "/items/", json={"description": "testItem"}
-        )
+        response = client.post("/items/", json={"description": "testItem"})
         # Assert
         assert response.status_code == 200, response.text
         data = response.json()
@@ -282,7 +272,7 @@ class TestItemsRouter:
         self, test_item, test_item2, authenticated_client
     ):
         # Act
-        response = authenticated_client.get("/items/")
+        response = client.get("/items/")
         # Assert
         assert response.status_code == 200, response.text
         data = response.json()
@@ -296,7 +286,7 @@ class TestItemsRouter:
         self, authenticated_client
     ):
         # Act
-        response = authenticated_client.get("/items/")
+        response = client.get("/items/")
         # Assert
         data = response.json()
         assert len(data) == 0
@@ -305,7 +295,7 @@ class TestItemsRouter:
         self, test_item, authenticated_client
     ):
         # Act
-        response = authenticated_client.put(
+        response = client.put(
             "/items/1",
             json={"description": "updatedItem"},
         )
@@ -319,7 +309,7 @@ class TestItemsRouter:
         self, test_item, authenticated_client
     ):
         # Act
-        response = authenticated_client.put(
+        response = client.put(
             "/items/1",
             json={"completed": True},
         )
@@ -332,7 +322,7 @@ class TestItemsRouter:
 
     def test_update_item_shouldreturnerrorwhenitemisnotindb(self, authenticated_client):
         # Act
-        response = authenticated_client.put(
+        response = client.put(
             "/items/1",
             json={"new_item_name": "updatedItem"},
         )
@@ -344,19 +334,19 @@ class TestItemsRouter:
         self, test_item, authenticated_client
     ):
         # Act
-        response = authenticated_client.delete(f"/items/{test_item['id']}")
+        response = client.delete(f"/items/{test_item['id']}")
         # Assert
         assert response.status_code == 200, response.text
         data = response.json()
         assert data["id"] == test_item["id"]
         # Try to get the deleted item
-        response = authenticated_client.get("/items/")
+        response = client.get("/items/")
         data = response.json()
         assert len(data) == 0
 
     def test_delete_item_shouldraiseerrorwhenitemisnotindb(self, authenticated_client):
         # Act
-        response = authenticated_client.delete("/items/1")
+        response = client.delete("/items/1")
         # Assert
         assert response.status_code == 404, response.text
         assert response.text == '{"detail":"Item with id 1 not found"}'

@@ -1,3 +1,19 @@
+input,
+textarea,
+button,
+select,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px black inset !important;
+}
+
+
 html {
   background: black;
 }
@@ -11,6 +27,7 @@ body {
   font-family: Poppins, sans-serif;
   font-size: 18px;
 }
+
 
 #root {
   max-width: 1280px;
@@ -37,6 +54,10 @@ button:hover {
 
 button:focus {
   outline: none;
+}
+
+button:active {
+  background: none;
 }
 
 input {
@@ -90,7 +111,7 @@ input:focus {
 .logout-button {
   position: absolute;
   top: 15px;
-  right: 15px;
+  right: 20px;
 }
 
 .parent {
@@ -130,11 +151,10 @@ input:focus {
   grid-area: 1 / 1 / 2 / 3;
 }
 
-
-
 .additem-button {
   grid-area: 1 / 3 / 2 / 4;
 }
+
 
 .todo {
   border: 2px solid rgb(255, 255, 255, 0.5);
@@ -175,5 +195,49 @@ input:focus {
   display: flex;
   align-items: center;
   justify-content: center;
+
+}
+
+@media (max-width: 600px) {
+
+  .todo,
+  .additem {
+    grid-template-columns: 35px 230px 35px;
+    width: 300px;
+  }
+
+  .parent img {
+    width: 20px;
+    height: 20px;
+  }
+
+  .parent button {
+    width: 35px;
+  }
+
+  .todo-description {
+    font-size: 0.8em;
+    padding: 5px;
+
+  }
+
+  .todo-checkbox {
+    width: 15px;
+  }
+
+  .todo-delete {
+    padding: 5px;
+  }
+
+  .additem-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .additem-input {
+    font-size: 0.9em;
+
+  }
 
 }

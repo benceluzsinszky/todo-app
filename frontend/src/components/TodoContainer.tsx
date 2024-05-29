@@ -1,20 +1,23 @@
 import { useAutoAnimate } from '@formkit/auto-animate/react';
-import { useContext } from "react";
+import { useContext, useState } from 'react';
 import { IsLoggedInContext, TodoItemContext } from "../GlobalContext";
 import AddItem from "./AddItem";
 import TodoItemBox from "./TodoItemBox";
+import UserMenu from './UserMenu';
 
 export default function TodoContainer() {
+
+    const [showUserMenu, setShowUserMenu] = useState(false);
 
     const { todoItems } = useContext(TodoItemContext);
     const { setIsLoggedIn } = useContext(IsLoggedInContext);
 
     const [parent] = useAutoAnimate<HTMLDivElement>();
 
-    const handleLogOut = () => {
-        localStorage.removeItem('token');
-        setIsLoggedIn(false);
-    }
+    // const handleLogOut = () => {
+    //     localStorage.removeItem('token');
+    //     setIsLoggedIn(false);
+    // };
 
     const fillTodos = (completed: boolean) => {
         return (
@@ -29,11 +32,13 @@ export default function TodoContainer() {
                 })
                 .map(item => <TodoItemBox key={item.id} item={item} />)
         )
-    }
+    };
 
     return (
         <>
-            <button onClick={handleLogOut} className='logout-button'>Log out</button>
+            <button onClick={() => setShowUserMenu(!showUserMenu)} className='user-button'>User</button>
+            {showUserMenu && <div className="overlay" onClick={() => setShowUserMenu(false)} />}
+            {showUserMenu && <UserMenu />}
             <div className="parent">
                 <AddItem />
                 <div ref={parent}>

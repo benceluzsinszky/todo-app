@@ -1,8 +1,12 @@
 import { useContext } from "react";
 import { IsLoggedInContext } from "../GlobalContext";
 
+interface UserMenuProps {
+    setShowUserMenu: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
-export default function UserMenu() {
+
+export default function UserMenu({ setShowUserMenu }: UserMenuProps) {
     const { setIsLoggedIn, loggedInUser } = useContext(IsLoggedInContext);
 
     const handleLogOut = () => {
@@ -15,7 +19,7 @@ export default function UserMenu() {
     return (
         <div className="user-menu">
             <div className="close-user-menu">
-                <button>X</button>
+                <button onClick={() => setShowUserMenu(false)}>X</button>
             </div>
             <div className="change-user-name">
                 <p>Username</p>

@@ -32,7 +32,7 @@ export default function TodoContainer() {
         <>
             <button onClick={() => setShowUserMenu(!showUserMenu)} className='user-button'>User</button>
             {showUserMenu && <div className="overlay" onClick={() => setShowUserMenu(false)} />}
-            {showUserMenu && <UserMenu />}
+            {showUserMenu && <UserMenu setShowUserMenu={setShowUserMenu} />}
             <div className="parent">
                 <AddItem />
                 <div ref={parent}>

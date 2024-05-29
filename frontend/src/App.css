@@ -202,11 +202,13 @@ input:focus {
 
 .user-menu {
   position: fixed;
-  top: 50%;
+  top: 30%;
   left: 50%;
   transform: translate(-50%, -50%);
   border: 1px solid white;
+  border-radius: 8px;
   z-index: 1000;
+  width: 200px
 }
 
 .overlay {

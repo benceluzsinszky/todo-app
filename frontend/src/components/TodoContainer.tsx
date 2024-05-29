@@ -1,6 +1,6 @@
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { useContext, useState } from 'react';
-import { IsLoggedInContext, TodoItemContext } from "../GlobalContext";
+import { TodoItemContext } from "../GlobalContext";
 import AddItem from "./AddItem";
 import TodoItemBox from "./TodoItemBox";
 import UserMenu from './UserMenu';
@@ -10,14 +10,8 @@ export default function TodoContainer() {
     const [showUserMenu, setShowUserMenu] = useState(false);
 
     const { todoItems } = useContext(TodoItemContext);
-    const { setIsLoggedIn } = useContext(IsLoggedInContext);
 
     const [parent] = useAutoAnimate<HTMLDivElement>();
-
-    // const handleLogOut = () => {
-    //     localStorage.removeItem('token');
-    //     setIsLoggedIn(false);
-    // };
 
     const fillTodos = (completed: boolean) => {
         return (

@@ -10,6 +10,8 @@ interface TodoItemContextValue {
 interface IsLoggedInContextValue {
     isLoggedIn: boolean;
     setIsLoggedIn: Function;
+    loggedInUser: string | null;
+    setLoggedInUser: Function;
 }
 
 interface GlobalContextProps {
@@ -25,15 +27,22 @@ export const TodoItemContext = createContext<TodoItemContextValue>({
 export const IsLoggedInContext = createContext<IsLoggedInContextValue>({
     isLoggedIn: true,
     setIsLoggedIn: () => { },
+    loggedInUser: null,
+    setLoggedInUser: () => { },
 });
 
 export default function GlobalContext({ children }: GlobalContextProps) {
     const [todoItems, setTodoItems] = useState<TodoItem[]>([]);
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(true);
+    const [loggedInUser, setLoggedInUser] = useState<string | null>(null);
 
     const fetchTodoItems = async () => {
-        if (!isLoggedIn) return;
         const token = localStorage.getItem('token');
+        if (!token) {
+            setIsLoggedIn(false)
+            return
+        };
+        if (!isLoggedIn) return;
         await fetch('http://localhost:8000/items/', {
             headers: {
                 'Content-Type': 'application/json',
@@ -48,7 +57,6 @@ export default function GlobalContext({ children }: GlobalContextProps) {
             })
             .then(data => {
                 setTodoItems(data);
-                console.log(data);
             })
             .catch(error => {
                 console.error(error);
@@ -60,7 +68,7 @@ export default function GlobalContext({ children }: GlobalContextProps) {
     }, [isLoggedIn]);
 
     return (
-        <IsLoggedInContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
+        <IsLoggedInContext.Provider value={{ isLoggedIn, setIsLoggedIn, loggedInUser, setLoggedInUser }}>
             <TodoItemContext.Provider value={{ todoItems, setTodoItems, fetchTodoItems }}>
                 {children}
             </TodoItemContext.Provider>

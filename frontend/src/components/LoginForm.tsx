@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import { IsLoggedInContext } from "../GlobalContext";
 
 export default function LoginForm() {
-    const { setIsLoggedIn } = useContext(IsLoggedInContext);
+    const { setIsLoggedIn, setLoggedInUser } = useContext(IsLoggedInContext);
 
     const [isRegistering, setIsRegistering] = useState(false);
 
@@ -41,8 +41,7 @@ export default function LoginForm() {
                     }
                     return response.json();
                 })
-                .then(data => {
-                    console.log(data);
+                .then(() => {
                     alert('Success!');
                     setIsRegistering(false);
                 })
@@ -68,8 +67,8 @@ export default function LoginForm() {
                     return response.json();
                 })
                 .then(data => {
-                    console.log(data);
                     localStorage.setItem('token', data.access_token);
+                    setLoggedInUser(username);
                     setIsLoggedIn(true);
                 })
                 .catch(error => {

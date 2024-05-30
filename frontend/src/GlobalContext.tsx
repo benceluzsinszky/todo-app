@@ -34,7 +34,7 @@ export const IsLoggedInContext = createContext<IsLoggedInContextValue>({
 export default function GlobalContext({ children }: GlobalContextProps) {
     const [todoItems, setTodoItems] = useState<TodoItem[]>([]);
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(true);
-    const [loggedInUser, setLoggedInUser] = useState<string | null>(null);
+    const [loggedInUser, setLoggedInUser] = useState<string | null>(localStorage.getItem('loggedInUser'));
 
     const fetchTodoItems = async () => {
         const token = localStorage.getItem('token');
@@ -66,6 +66,10 @@ export default function GlobalContext({ children }: GlobalContextProps) {
     useEffect(() => {
         fetchTodoItems();
     }, [isLoggedIn]);
+
+    useEffect(() => {
+        localStorage.setItem('loggedInUser', loggedInUser || '');
+    }, [loggedInUser]);
 
     return (
         <IsLoggedInContext.Provider value={{ isLoggedIn, setIsLoggedIn, loggedInUser, setLoggedInUser }}>

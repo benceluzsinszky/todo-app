@@ -22,7 +22,7 @@ export default function LoginForm() {
                 alert('Passwords do not match');
                 return;
             }
-            const url = 'http://localhost:8000/users/';
+            const url = `${process.env.REACT_APP_BACKEND_URL}/users/`;
             fetch(url, {
                 method: 'POST',
                 headers: {
@@ -49,7 +49,7 @@ export default function LoginForm() {
                     alert(error);
                 });
         } else {
-            const url = 'http://localhost:8000/token';
+            const url = `${process.env.REACT_APP_BACKEND_URL}/token`;
             fetch(url, {
                 method: 'POST',
                 headers: {

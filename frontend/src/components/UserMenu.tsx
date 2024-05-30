@@ -45,7 +45,7 @@ export default function UserMenu({ setShowUserMenu }: UserMenuProps) {
             updatedUser.password = newPassword1Element.value;
         }
 
-        fetch('http://localhost:8000/token', {
+        fetch(`${process.env.REACT_APP_BACKEND_URL}/token`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
@@ -65,7 +65,7 @@ export default function UserMenu({ setShowUserMenu }: UserMenuProps) {
                 const token = data.access_token;
                 console.log(token);
                 localStorage.setItem('token', token);
-                return fetch('http://localhost:8000/users/me', {
+                return fetch(`${process.env.REACT_APP_BACKEND_URL}/users/me`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',

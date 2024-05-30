@@ -14,7 +14,7 @@ export default function AddItem() {
         }
         const token = localStorage.getItem('token');
         try {
-            const response = await fetch('http://localhost:8000/items/', {
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/items/`, {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${token}`,

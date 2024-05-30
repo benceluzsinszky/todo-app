@@ -202,13 +202,78 @@ input:focus {
 
 .user-menu {
   position: fixed;
-  top: 30%;
+  top: 20%;
   left: 50%;
-  transform: translate(-50%, -50%);
-  border: 1px solid white;
+  transform: translate(-50%);
+  border: 2px solid rgba(255, 255, 255, 0.5);
   border-radius: 8px;
   z-index: 1000;
-  width: 200px
+  min-width: 200px
+}
+
+.username {
+  border-bottom: 2px solid transparent;
+  margin: 0px 15px 10px 0px;
+  padding: 1px 2px;
+  height: 30px;
+}
+
+.user-menu input {
+  border-bottom: 2px solid rgb(255, 255, 255, 0.5);
+  width: 200px;
+  height: 30px;
+  margin: 0px 15px 10px 0px;
+}
+
+.close-user-menu {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  cursor: pointer;
+}
+
+.close-user-menu img {
+  width: 25px;
+  height: 25px;
+  opacity: 0.7;
+}
+
+.change-user-details {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.change-user-details button {
+  font-weight: 500;
+  font-size: 1em;
+}
+
+.change-username {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.change-password {
+  display: flex;
+  flex-direction: column;
+}
+
+.new-password {
+  display: flex;
+  flex-direction: column;
+}
+
+.logout {
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
 }
 
 .overlay {

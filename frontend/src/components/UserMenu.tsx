@@ -97,7 +97,9 @@ export default function UserMenu({ setShowUserMenu }: UserMenuProps) {
     return (
         <div className="user-menu">
             <div className="close-user-menu">
-                <button onClick={() => setShowUserMenu(false)}><img src="../../public/close.png" alt="Close button" /></button>
+                <button onClick={() => setShowUserMenu(false)}>
+                    <img src="../../public/close.png" alt="Close button" />
+                </button>
             </div>
             <div className="change-user-details">
                 <div className="change-username">
@@ -115,12 +117,25 @@ export default function UserMenu({ setShowUserMenu }: UserMenuProps) {
                 </div>
                 <div className="change-password">
                     <div className="current-password">
-                        <input type="password" placeholder="Password" className="current-password-input"></input>
+                        <input
+                            type="password"
+                            placeholder="Password"
+                            className="current-password-input"
+                            autoComplete="off"
+                        />
                         <button onClick={() => { setIsEditingPassword(!isEditingPassword) }}>Change</button>
                     </div>
                     <div className="new-password">
-                        {isEditingPassword && <input type="password" placeholder="New password" className="new-password-1"></input>}
-                        {isEditingPassword && <input type="password" placeholder="New password again" className="new-password-2"></input>}
+                        {isEditingPassword && <input
+                            type="password"
+                            placeholder="New password"
+                            className="new-password-1"
+                        />}
+                        {isEditingPassword && <input
+                            type="password"
+                            placeholder="New password again"
+                            className="new-password-2"
+                        />}
                     </div>
                 </div>
             </div>

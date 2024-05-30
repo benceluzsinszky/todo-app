@@ -212,9 +212,8 @@ input:focus {
 }
 
 .username {
-  border-bottom: 2px solid transparent;
   margin: 0px 15px 10px 0px;
-  padding: 1px 2px;
+  padding-top: 2px;
   height: 30px;
 }
 
@@ -222,6 +221,7 @@ input:focus {
   border-bottom: 2px solid rgb(255, 255, 255, 0.5);
   width: 200px;
   height: 30px;
+  padding: 0;
   margin: 0px 15px 10px 0px;
 }
 

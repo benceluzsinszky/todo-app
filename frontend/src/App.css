@@ -64,7 +64,7 @@ input {
   border: 0;
   background-color: transparent;
   color: rgb(255, 255, 255, 0.9);
-  font-family: Poppins, sans-serif;
+  font-family: inherit;
   font-size: 18px;
 }
 
@@ -208,21 +208,23 @@ input:focus {
   border: 2px solid rgba(255, 255, 255, 0.5);
   border-radius: 8px;
   z-index: 1000;
-  min-width: 200px
+  width: 330px;
 }
 
-.username {
+
+.username,
+.user-menu input {
+  box-sizing: border-box;
   margin: 0px 15px 10px 0px;
-  padding-top: 2px;
   height: 30px;
+  line-height: 30px;
+
 }
 
 .user-menu input {
   border-bottom: 2px solid rgb(255, 255, 255, 0.5);
   width: 200px;
-  height: 30px;
   padding: 0;
-  margin: 0px 15px 10px 0px;
 }
 
 .close-user-menu {
@@ -242,7 +244,6 @@ input:focus {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   padding: 20px;
 }
 
@@ -322,11 +323,6 @@ input:focus {
     display: flex;
     align-items: center;
     justify-content: center;
-  }
-
-  .additem-input {
-    font-size: 0.9em;
-
   }
 
 }

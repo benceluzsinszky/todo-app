@@ -20,6 +20,21 @@ cd frontend
 npm install
 ```
 
+Add a `.env` file in the root directory with the following content:
+
+```env
+SECRET_KEY = "your secret key for hashing"
+ALGORITHM = "HS256"
+
+DATABASE_URL = "your database url"
+```
+
+Add a `.env` file in the `frontend` directory with the following content:
+
+```env
+VITE_BACKEND_URL = "your backend url"
+```
+
 ### Running
 
 There is an npm script to run the frontend and backend together:

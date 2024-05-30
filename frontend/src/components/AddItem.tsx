@@ -1,5 +1,6 @@
 
 import { useContext, useState } from "react";
+import { BACKEND_URL } from "../App";
 import { TodoItemContext } from "../GlobalContext";
 import { TodoItem } from "../interfaces/interfaces";
 
@@ -14,7 +15,7 @@ export default function AddItem() {
         }
         const token = localStorage.getItem('token');
         try {
-            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/items/`, {
+            const response = await fetch(`${BACKEND_URL}/items/`, {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${token}`,

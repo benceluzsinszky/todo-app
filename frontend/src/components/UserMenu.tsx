@@ -1,4 +1,5 @@
 import { useContext, useState } from "react";
+import { BACKEND_URL } from "../App";
 import { IsLoggedInContext } from "../GlobalContext";
 
 interface UserMenuProps {
@@ -45,7 +46,7 @@ export default function UserMenu({ setShowUserMenu }: UserMenuProps) {
             updatedUser.password = newPassword1Element.value;
         }
 
-        fetch(`${process.env.REACT_APP_BACKEND_URL}/token`, {
+        fetch(`${BACKEND_URL}/token`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
@@ -65,7 +66,7 @@ export default function UserMenu({ setShowUserMenu }: UserMenuProps) {
                 const token = data.access_token;
                 console.log(token);
                 localStorage.setItem('token', token);
-                return fetch(`${process.env.REACT_APP_BACKEND_URL}/users/me`, {
+                return fetch(`${BACKEND_URL}/users/me`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',

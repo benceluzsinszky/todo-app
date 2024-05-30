@@ -1,4 +1,5 @@
 import { useContext, useState } from "react";
+import { BACKEND_URL } from "../App";
 import { TodoItemContext } from "../GlobalContext";
 import { TodoItem } from "../interfaces/interfaces";
 
@@ -15,7 +16,7 @@ export default function TodoItemBox({ item }: TodoItemBoxProps) {
         const newCheckedState = event.target.checked;
         const token = localStorage.getItem('token');
         try {
-            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/items/${item.id}`, {
+            const response = await fetch(`${BACKEND_URL}/items/${item.id}`, {
                 method: 'PUT',
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -41,7 +42,7 @@ export default function TodoItemBox({ item }: TodoItemBoxProps) {
     const handleDelete = async () => {
         const token = localStorage.getItem('token');
         try {
-            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/items/${item.id}`, {
+            const response = await fetch(`${BACKEND_URL}/items/${item.id}`, {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${token}`,

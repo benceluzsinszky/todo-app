@@ -1,4 +1,5 @@
 import { useContext, useState } from "react";
+import { BACKEND_URL } from "../App";
 import { IsLoggedInContext } from "../GlobalContext";
 
 export default function LoginForm() {
@@ -22,7 +23,7 @@ export default function LoginForm() {
                 alert('Passwords do not match');
                 return;
             }
-            const url = `${process.env.REACT_APP_BACKEND_URL}/users/`;
+            const url = `${BACKEND_URL}/users/`;
             fetch(url, {
                 method: 'POST',
                 headers: {
@@ -49,7 +50,7 @@ export default function LoginForm() {
                     alert(error);
                 });
         } else {
-            const url = `${process.env.REACT_APP_BACKEND_URL}/token`;
+            const url = `${BACKEND_URL}/token`;
             fetch(url, {
                 method: 'POST',
                 headers: {

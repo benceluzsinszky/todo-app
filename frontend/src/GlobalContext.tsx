@@ -1,4 +1,5 @@
 import { createContext, useEffect, useState } from "react";
+import { BACKEND_URL } from "./App";
 import { TodoItem } from "./interfaces/interfaces";
 
 interface TodoItemContextValue {
@@ -43,7 +44,7 @@ export default function GlobalContext({ children }: GlobalContextProps) {
             return
         };
         if (!isLoggedIn) return;
-        await fetch(`${process.env.REACT_APP_BACKEND_URL}/items/`, {
+        await fetch(`${BACKEND_URL}/items/`, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`

@@ -122,7 +122,7 @@ export default function UserMenu({ setShowUserMenu }: UserMenuProps) {
                             type="password"
                             placeholder="Password"
                             className="current-password-input"
-                            autoComplete="off"
+                            autoComplete="new-password"
                         />
                         <button onClick={() => { setIsEditingPassword(!isEditingPassword) }}>Change</button>
                     </div>

@@ -18,6 +18,8 @@ export default function UserMenu({ setShowUserMenu }: UserMenuProps) {
 
     const [isEditingUsername, setIsEditingUsername] = useState(false);
     const [isEditingPassword, setIsEditingPassword] = useState(false);
+    const [username, setUsername] = useState(loggedInUser || '');
+
 
     const handleLogOut = () => {
         localStorage.removeItem('token');
@@ -109,11 +111,12 @@ export default function UserMenu({ setShowUserMenu }: UserMenuProps) {
                         <input
                             type="text"
                             placeholder="Username"
-                            value={loggedInUser || ''}
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
                             className="username-input"
                         />
                     ) : (
-                        <p className="username">{loggedInUser}</p>
+                        <p className="username">{username}</p>
                     )}
                     <button onClick={() => { setIsEditingUsername(!isEditingUsername) }}>Change</button>
                 </div>

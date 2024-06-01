@@ -2,6 +2,10 @@ import { createContext, useEffect, useState } from "react";
 import { BACKEND_URL } from "./App";
 import { TodoItem } from "./interfaces/interfaces";
 
+interface MessageBox {
+    text: string;
+    color: string;
+}
 interface TodoItemContextValue {
     todoItems: TodoItem[];
     setTodoItems: Function;
@@ -15,9 +19,15 @@ interface IsLoggedInContextValue {
     setLoggedInUser: Function;
 }
 
+interface MessageBoxContextProps {
+    messageBox: MessageBox;
+    setMessageBox: Function;
+}
+
 interface GlobalContextProps {
     children: React.ReactNode
 }
+
 
 export const TodoItemContext = createContext<TodoItemContextValue>({
     todoItems: [],
@@ -32,10 +42,16 @@ export const IsLoggedInContext = createContext<IsLoggedInContextValue>({
     setLoggedInUser: () => { },
 });
 
+export const MessageBoxContext = createContext<MessageBoxContextProps>({
+    messageBox: { text: '', color: 'green' },
+    setMessageBox: () => { },
+});
+
 export default function GlobalContext({ children }: GlobalContextProps) {
     const [todoItems, setTodoItems] = useState<TodoItem[]>([]);
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(true);
     const [loggedInUser, setLoggedInUser] = useState<string | null>(localStorage.getItem('loggedInUser'));
+    const [messageBox, setMessageBox] = useState<MessageBox>({ text: '', color: 'green' });
 
     const fetchTodoItems = async () => {
         const token = localStorage.getItem('token');
@@ -75,7 +91,9 @@ export default function GlobalContext({ children }: GlobalContextProps) {
     return (
         <IsLoggedInContext.Provider value={{ isLoggedIn, setIsLoggedIn, loggedInUser, setLoggedInUser }}>
             <TodoItemContext.Provider value={{ todoItems, setTodoItems, fetchTodoItems }}>
-                {children}
+                <MessageBoxContext.Provider value={{ messageBox, setMessageBox }}>
+                    {children}
+                </MessageBoxContext.Provider>
             </TodoItemContext.Provider>
         </IsLoggedInContext.Provider>
     )

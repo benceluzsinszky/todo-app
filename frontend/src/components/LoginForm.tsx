@@ -1,11 +1,14 @@
 import { useContext, useState } from "react";
 import { BACKEND_URL } from "../App";
-import { IsLoggedInContext } from "../GlobalContext";
+import { IsLoggedInContext, MessageBoxContext } from "../GlobalContext";
+
 
 export default function LoginForm() {
     const { setIsLoggedIn, setLoggedInUser } = useContext(IsLoggedInContext);
+    const { setMessageBox } = useContext(MessageBoxContext);
 
     const [isRegistering, setIsRegistering] = useState(false);
+
 
     const handleRegisterClick = (event: React.MouseEvent) => {
         event.preventDefault();
@@ -18,9 +21,17 @@ export default function LoginForm() {
         const password = (document.getElementById('password') as HTMLInputElement).value;
 
         if (isRegistering) {
+            if (!username) {
+                setMessageBox({ text: 'Username is required', color: 'red' });
+                return;
+            }
+            if (!password) {
+                setMessageBox({ text: 'Password is required', color: 'red' });
+                return;
+            }
             const confirmPassword = (document.getElementById('confirmPassword') as HTMLInputElement).value;
             if (password !== confirmPassword) {
-                alert('Passwords do not match');
+                setMessageBox({ text: 'Passwords do not match', color: 'red' });
                 return;
             }
             const url = `${BACKEND_URL}/users/`;
@@ -37,17 +48,17 @@ export default function LoginForm() {
                 .then(response => {
                     if (!response.ok) {
                         if (response.status === 409) {
-                            throw new Error("Username already exists");
+                            setMessageBox({ text: 'Username already exists', color: 'red' });
                         } throw new Error(response.statusText);
                     }
                     return response.json();
                 })
                 .then(() => {
-                    alert('Success!');
+                    setMessageBox({ text: 'Success!', color: 'green' });
                     setIsRegistering(false);
                 })
                 .catch(error => {
-                    alert(error);
+                    setMessageBox({ text: error.message, color: 'red' });
                 });
         } else {
             const url = `${BACKEND_URL}/token`;
@@ -72,8 +83,8 @@ export default function LoginForm() {
                     setLoggedInUser(username);
                     setIsLoggedIn(true);
                 })
-                .catch(error => {
-                    alert(error);
+                .catch(() => {
+                    setMessageBox({ text: 'Invalid username or password', color: 'red' });
                 });
         }
     };

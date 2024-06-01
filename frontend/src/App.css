@@ -288,6 +288,31 @@ input:focus {
   z-index: 999;
 }
 
+/* MessageBox */
+
+.messagebox-red {
+  color: salmon;
+  border-color: salmon;
+}
+
+.messagebox-green {
+  color: mediumseagreen;
+  border-color: mediumseagreen;
+}
+
+.messagebox {
+  position: fixed;
+  top: 10%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 2px solid;
+  border-radius: 8px;
+  padding: 5px;
+  width: 300px;
+  z-index: 1000;
+
+}
+
 @media (max-width: 600px) {
 
   .todo,

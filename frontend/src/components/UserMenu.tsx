@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { BACKEND_URL } from "../App";
-import { IsLoggedInContext } from "../GlobalContext";
+import { IsLoggedInContext, MessageBoxContext } from "../GlobalContext";
 
 interface UserMenuProps {
     setShowUserMenu: React.Dispatch<React.SetStateAction<boolean>>;
@@ -14,6 +14,7 @@ interface UpdatedUser {
 
 export default function UserMenu({ setShowUserMenu }: UserMenuProps) {
     const { setIsLoggedIn, loggedInUser, setLoggedInUser } = useContext(IsLoggedInContext);
+    const { setMessageBox } = useContext(MessageBoxContext);
 
     const [isEditingUsername, setIsEditingUsername] = useState(false);
     const [isEditingPassword, setIsEditingPassword] = useState(false);
@@ -40,7 +41,7 @@ export default function UserMenu({ setShowUserMenu }: UserMenuProps) {
             const newPassword1Element = document.querySelector('.new-password-1') as HTMLInputElement;
             const newPassword2Element = document.querySelector('.new-password-2') as HTMLInputElement;
             if (newPassword1Element.value !== newPassword2Element.value) {
-                alert('Passwords do not match');
+                setMessageBox({ text: 'Passwords do not match', color: 'red' });
                 return;
             }
             updatedUser.password = newPassword1Element.value;
@@ -80,16 +81,16 @@ export default function UserMenu({ setShowUserMenu }: UserMenuProps) {
                         }
                         setIsEditingPassword(false);
                         setIsEditingUsername(false);
-                        alert('Success!');
+                        setMessageBox({ text: 'Success!', color: 'green' });
                         return;
                     }
                 }).catch(error => {
-                    alert(error);
+                    setMessageBox({ text: error.message, color: 'red' });
                     return;
                 });
             })
-            .catch(error => {
-                alert(error);
+            .catch(() => {
+                setMessageBox({ text: 'Invalid password', color: 'red' });
                 return;
             });
     };

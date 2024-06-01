@@ -4,7 +4,7 @@ import { MessageBoxContext } from "../GlobalContext";
 
 export default function MessageBox() {
 
-    const [showMessageBox, setShowMessageBox] = useState<boolean>(true);
+    const [showMessageBox, setShowMessageBox] = useState<boolean>(false);
 
     const { messageBox } = useContext(MessageBoxContext);
 

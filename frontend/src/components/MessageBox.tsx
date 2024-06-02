@@ -11,7 +11,9 @@ export default function MessageBox() {
     const messageClass = messageBox.color === "red" ? 'messagebox-red' : 'messagebox-green';
 
     useEffect(() => {
-        setShowMessageBox(true);
+        if (messageBox.text !== '') {
+            setShowMessageBox(true);
+        }
     }, [messageBox]);
 
     return (

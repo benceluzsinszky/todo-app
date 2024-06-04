@@ -1,9 +1,7 @@
 # Todo App
 
-A todo app with React frontend and FastAPI backend.
+A todo app with React.ts frontend and FastAPI backend.
 Various other backed framework implementations are planned.
-
-The app is using OAuth2 Bearer token for user authentication.
 
 ## Getting Started
 

@@ -24,12 +24,12 @@ npm install
 export SECRET_KEY = "your secret key for JWT token hashing"
 export ALGORITHM = "HS256"
 
-export DATABASE_URL = "your database url"
+export DATABASE_URL = "postgresql://user:password@host:port/database"
 
 export VITE_BACKEND_URL = "http://your_backend_url:port"
 ```
 
->**Note:** The database URL should be in the format: `postgresql://user:password@host:port/database`
+>**Note:** The database URL must be accepted by [SQLAlchemy](https://docs.sqlalchemy.org/en/20/core/engines.html).
 
 ### Running
 

@@ -20,20 +20,18 @@ cd frontend
 npm install
 ```
 
-Add a `.env` file in the root directory with the following content:
+#### Environment variables
 
-```env
-SECRET_KEY = "your secret key for hashing"
-ALGORITHM = "HS256"
+```bash
+export SECRET_KEY = "your secret key for JWT token hashing"
+export ALGORITHM = "HS256"
 
-DATABASE_URL = "your database url"
+export DATABASE_URL = "your database url"
+
+export VITE_BACKEND_URL = "http://your_backend_url:port"
 ```
 
-Add a `.env` file in the `frontend` directory with the following content:
-
-```env
-VITE_BACKEND_URL = "your backend url"
-```
+>**Note:** The database URL should be in the format: `postgresql://user:password@host:port/database`
 
 ### Running
 

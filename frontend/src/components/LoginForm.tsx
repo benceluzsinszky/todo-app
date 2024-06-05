@@ -74,6 +74,11 @@ export default function LoginForm() {
             })
                 .then(response => {
                     if (!response.ok) {
+                        if (response.status === 404) {
+                            throw new Error('Server error');
+                        } else if (response.status === 403) {
+                            throw new Error('Invalid username or password');
+                        }
                         throw new Error(response.statusText);
                     }
                     return response.json();
@@ -83,8 +88,8 @@ export default function LoginForm() {
                     setLoggedInUser(username);
                     setIsLoggedIn(true);
                 })
-                .catch(() => {
-                    setMessageBox({ text: 'Invalid username or password', color: 'red' });
+                .catch(error => {
+                    setMessageBox({ text: error.message, color: 'red' });
                 });
         }
     };

@@ -28,17 +28,17 @@ class ItemsService {
         });
     };
 
-    async updateItem(updated_item) {
-        let item = await this.getItem(updated_item.id);
-        if (!item.completed && updated_item.completed) {
-            updated_item.date_completed = new Date(new Date().toUTCString());
+    async updateItem(updatedItem) {
+        let item = await this.getItem(updatedItem.id);
+        if (!item.completed && updatedItem.completed) {
+            updatedItem.date_completed = new Date(new Date().toUTCString());
         }
         return await prisma.todo_item.update({
             where: {
-                id: updated_item.id
+                id: updatedItem.id
             },
             data: {
-                ...updated_item
+                ...updatedItem
             }
         });
     };

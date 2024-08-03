@@ -42,9 +42,9 @@ itemsRouter.put('/:id', async (req, res, next) => {
     console.error(err);
     if (err.name === 'NotFoundError') {
       res.status(404).send(`Item with id ${req.params.id} not found`);
-    } else {
-      res.status(500).send(err.message);
+      return;
     }
+    res.status(500).send(err.message);
   }
 });
 
@@ -57,9 +57,9 @@ itemsRouter.delete('/:id', async (req, res, next) => {
     console.error(err);
     if (err.name === 'PrismaClientKnownRequestError') {
       res.status(404).send(`Item with id ${req.params.id} not found`);
-    } else {
-      res.status(500).send(err.message);
+      return;
     }
+    res.status(500).send(err.message);
   }
 });
 

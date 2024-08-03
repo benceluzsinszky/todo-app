@@ -7,27 +7,29 @@ const prisma = new PrismaClient();
 class UsersService {
 
     async getUser(username) {
-        return await prisma.user.findUniqueOrThrow({
+        const user = await prisma.user.findFirst({
             where: {
                 username: username
             }
         });
+        return user;
     };
 
     async createUser(user) {
-        let saltRounds = 12;
+        const saltRounds = 12;
         const hash = await bcrypt.hash(user.password, saltRounds);
         user.password = hash;
 
-        return await prisma.user.create({
+        user = await prisma.user.create({
             data: {
                 ...user
             }
         });
+        return user;
     };
 
     async updateUser(currentUser, updatedUser) {
-        return await prisma.user.update({
+        user = await prisma.user.update({
             where: {
                 id: currentUser.id
             },
@@ -35,14 +37,16 @@ class UsersService {
                 ...updatedUser
             }
         });
+        return user;
     };
 
     async deleteUser(user) {
-        return await prisma.user.delete({
+        user = await prisma.user.delete({
             where: {
                 id: user.id
             }
         });
+        return user;
     };
 };
 

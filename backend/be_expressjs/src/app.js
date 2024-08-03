@@ -3,12 +3,17 @@ const express = require('express');
 const createError = require('http-errors');
 const logger = require('morgan');
 const path = require('path');
+const cors = require('cors');
 
 const authRouter = require('./routes/auth_router.js');
 const itemsRouter = require('./routes/items_router.js');
 const usersRouter = require('./routes/users_router.js');
 
+const { getCurrentUserMiddleware } = require('./services/auth_service.js');
+
 var app = express();
+
+app.use(cors());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -20,8 +25,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/items', itemsRouter);
+app.use('/items', getCurrentUserMiddleware, itemsRouter);
 app.use('/users', usersRouter);
+app.use('/', authRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

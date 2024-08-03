@@ -7,6 +7,8 @@
     "frontend": "cd frontend && npx vite",
     "backend:fastapi": "cd backend/be_fastapi && uvicorn main:app --reload --port 8000",
     "fastapi": "concurrently \"npm run frontend\" \"npm run backend:fastapi\"",
+    "backend:expressjs": "cd backend/be_expressjs && npm run devstart",
+    "expressjs": "concurrently \"npm run frontend\" \"npm run backend:expressjs\"",
     "dpc": "cmd /C FOR /d /r . %d in (__pycache__) DO @IF EXIST \"%d\" rd /s /q \"%d\""
   },
   "keywords": [],

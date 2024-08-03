@@ -3,14 +3,16 @@ const UsersService = require('../services/users_service.js');
 
 const usersRouter = express.Router();
 
+const { getCurrentUserMiddleware } = require('../services/auth_service.js');
+
 const usersService = new UsersService()
 
 const currentUser = {
   id: 1
 };
 
-usersRouter.get('/me', async (req, res, next) => {
-  return currentUser;
+usersRouter.get('/me', getCurrentUserMiddleware, async (req, res, next) => {
+  return res.json(req.user);
 });
 
 usersRouter.post('/', async (req, res, next) => {
@@ -32,19 +34,19 @@ usersRouter.post('/', async (req, res, next) => {
   }
 });
 
-usersRouter.put('/me', async (req, res, next) => {
+usersRouter.put('/me', getCurrentUserMiddleware, async (req, res, next) => {
   try {
     let updatedUser = req.body;
-    user = await usersService.updateUser(currentUser, updatedUser);
+    user = await usersService.updateUser(req.user, updatedUser);
     res.json(user);
   } catch (err) {
     res.status(500).send(err.message);
   }
 });
 
-usersRouter.delete('/me', async (req, res, next) => {
+usersRouter.delete('/me', getCurrentUserMiddleware, async (req, res, next) => {
   try {
-    user = await usersService.deleteUser(currentUser);
+    user = await usersService.deleteUser(req.user);
     res.json(user);
   } catch (err) {
     console.error(err);

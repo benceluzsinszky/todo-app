@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@prisma/client": "^5.17.0",
+    "be-expressjs": "file:",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "express": "^4.19.2",

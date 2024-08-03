@@ -5,13 +5,10 @@ const itemsRouter = express.Router();
 
 const itemsService = new ItemsService();
 
-const currentUser = {
-  id: 1
-};
 
 itemsRouter.get('/', async (req, res, next) => {
   try {
-    items = await itemsService.getItemsOfUser(currentUser);
+    items = await itemsService.getItemsOfUser(req.user);
     res.json(items);
   } catch (err) {
     console.error(err);
@@ -21,7 +18,7 @@ itemsRouter.get('/', async (req, res, next) => {
 
 itemsRouter.post('/', async (req, res, next) => {
   let item = req.body;
-  item.user_id = currentUser.id;
+  item.user_id = req.user.id;
   try {
     item = await itemsService.createItem(item);
     res.json(item);
@@ -34,7 +31,7 @@ itemsRouter.post('/', async (req, res, next) => {
 itemsRouter.put('/:id', async (req, res, next) => {
   let updatedItem = req.body;
   updatedItem.id = parseInt(req.params.id);
-  updatedItem.user_id = currentUser.id;
+  updatedItem.user_id = req.user.id;
   try {
     item = await itemsService.updateItem(updatedItem);
     res.json(item);

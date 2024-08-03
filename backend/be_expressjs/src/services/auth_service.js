@@ -37,7 +37,7 @@ class AuthService {
 
     async getCurrentUser(token) {
         const payload = jwt.verify(token, SECRET_KEY, { algorithms: [ALGORITHM] });
-        const username = payload.sub;
+        const username = payload.username;
         if (!username) {
             throw Error;
         }

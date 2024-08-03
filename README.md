@@ -1,7 +1,11 @@
 # Todo App
 
-A todo app with React.ts frontend and FastAPI backend.
-Various other backed framework implementations are planned.
+A todo app with React.ts frontend and various backend frameworks.
+
+Currently implemented backends:
+
+- FastAPI
+- ExpressJS
 
 ## Getting Started
 
@@ -12,10 +16,21 @@ Node.js and npm are required to run the frontend. Python and pip are required to
 ### Installing
 
 ```bash
-pip install -r requirements.txt
 npm install
 cd frontend
 npm install
+```
+
+For FastAPI:
+
+```bash
+pip install -r requirements.txt
+```
+
+For ExpressJS:
+
+```bash
+cd .\backend\be_expressjs\
 ```
 
 #### Environment variables
@@ -29,14 +44,20 @@ export DATABASE_URL = "postgresql://user:password@host:port/database"
 export VITE_BACKEND_URL = "http://your_backend_url:port"
 ```
 
->**Note:** The database URL must be accepted by [SQLAlchemy](https://docs.sqlalchemy.org/en/20/core/engines.html).
-
 ### Running
 
-There is an npm script to run the frontend and backend together:
+There are npm scripts to run the frontend and backend concurrently:
+
+FastAPI:
 
 ```bash
 npm run fastapi
+```
+
+ExpressJS:
+
+```bash
+npm run expressjs
 ```
 
 ## Architecture
@@ -63,7 +84,7 @@ erDiagram
 
 ### Endpoints
 
-The endpoints for the FastAPI are available at `/docs`.
+The endpoints are available via Swagger UI with the FastAPI backend on `/docs` endpoint.
 
 #### Login
 

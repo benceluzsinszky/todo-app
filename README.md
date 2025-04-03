@@ -7,6 +7,11 @@ Currently implemented backends:
 - FastAPI
 - ExpressJS
 
+Planned backend:
+
+- Go Standard Library
+- .Net
+
 ## Getting Started
 
 ### Prerequisites
